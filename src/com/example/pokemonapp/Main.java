@@ -12,7 +12,10 @@ public class Main {
         System.out.println("1:ニャオハ　2:ホゲータ　3:クワッス");
         String choice = scanner.nextLine();
         
+        scanner.close();
+        
 
     }
+         
 
 }
