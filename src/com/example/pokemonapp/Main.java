@@ -1,5 +1,6 @@
 package com.example.pokemonapp;
 
+import java.util.Random;
 import java.util.Scanner;
 
 import com.example.pokemonapp.model.Pokemon;
@@ -47,6 +48,17 @@ public class Main {
         }
         
         System.out.println(playerPokemon.getName() + "を選びました！");
+        
+        // ランダムに対戦相手のポケモンを選ぶ
+        Pokemon[] cpuPokemonList = {nyaoha, hogator, kuwassu};
+        Random random = new Random();
+        Pokemon cpuPokemon = cpuPokemonList[random.nextInt(cpuPokemonList.length)];
+
+        while (cpuPokemon == playerPokemon) {
+            cpuPokemon = cpuPokemonList[random.nextInt(cpuPokemonList.length)];
+        }
+
+        System.out.println("対戦相手のポケモンは" + cpuPokemon.getName() + "です！");
         
         scanner.close();
         
