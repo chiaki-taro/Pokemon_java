@@ -11,6 +11,7 @@ public class Pokemon {
     private int hp;
     private int attack;
     private int defense;
+    private int speed;
     
     /**
      * Pokemonクラスのコンストラクタ。
@@ -20,13 +21,15 @@ public class Pokemon {
      * @param hp      ポケモンの体力（HP）
      * @param attack  ポケモンの攻撃力
      * @param defense ポケモンの防御力
+     * @param speed   ポケモンの素早さ
      */
-    public Pokemon(String name, String type, int hp, int attack, int defense) {
+    public Pokemon(String name, String type, int hp, int attack, int defense, int speed) {
         this.name = name;
         this.type = type;
         this.hp = hp;
         this.attack = attack;
         this.defense = defense;
+        this.speed = speed;
     }
     
     /**
@@ -82,8 +85,14 @@ public class Pokemon {
     public int getDefense() { 
         return defense; 
     }
-
     
-    
+    /**
+     * ポケモンの素早さを取得する。
+     *
+     * @return ポケモンの素早さ
+     */
+    public int getSpeed() {
+        return speed;
+    }
 
 }

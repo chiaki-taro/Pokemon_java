@@ -18,9 +18,9 @@ public class Main {
         BattleService battleService = new BattleService();
         
         // 3匹のポケモンを用意
-        Pokemon nyaoha = pokemonService.createPokemon("ニャオハ", "くさ", 40, 61, 54);
-        Pokemon hogator = pokemonService.createPokemon("ホゲータ", "ほのお", 67, 45, 59);
-        Pokemon kuwassu = pokemonService.createPokemon("クワッス", "みず", 55, 65, 45);
+        Pokemon nyaoha = pokemonService.createPokemon("ニャオハ", "くさ", 40, 61, 54, 65);
+        Pokemon hogator = pokemonService.createPokemon("ホゲータ", "ほのお", 67, 45, 59, 36);
+        Pokemon kuwassu = pokemonService.createPokemon("クワッス", "みず", 55, 65, 45, 50);
         
         System.out.println("ポケモンを選んで下さい。");
         System.out.println("1:ニャオハ　2:ホゲータ　3:クワッス");

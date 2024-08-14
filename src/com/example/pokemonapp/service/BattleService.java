@@ -94,7 +94,7 @@ public class BattleService {
      * @param cpuPokemon CPUのポケモン
      */
     private void displayCurrentStatus(Pokemon playerPokemon, Pokemon cpuPokemon) {
-        System.out.println("---現在の状況---");
+        System.out.println("----現在の状況----");
         System.out.println(playerPokemon.getName() + " HP: " + playerPokemon.getHp());
         System.out.println(cpuPokemon.getName() + " HP: " + cpuPokemon.getHp());
         System.out.println("----------------");
