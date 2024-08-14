@@ -23,6 +23,24 @@ public class Trainer {
         this.pokemonList = new ArrayList<>();
     }
     
+     /**
+     * トレーナーの名前を取得する。
+     *
+     * @return トレーナーの名前
+     */
+    public String getName() {
+        return name;
+    }
+
+     /**
+     * トレーナーの名前を設定する。
+     *
+     * @param name 設定する名前
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+        
     /**
      * トレーナーにポケモンを追加する。
      *

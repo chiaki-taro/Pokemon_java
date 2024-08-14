@@ -3,7 +3,10 @@ package com.example.pokemonapp;
 import java.util.Random;
 import java.util.Scanner;
 
+import com.example.pokemonapp.model.Battle;
 import com.example.pokemonapp.model.Pokemon;
+import com.example.pokemonapp.model.Trainer;
+import com.example.pokemonapp.service.BattleService;
 import com.example.pokemonapp.service.PokemonService;
 
 public class Main {
@@ -12,11 +15,12 @@ public class Main {
         
         Scanner scanner = new Scanner(System.in);
         PokemonService pokemonService = new PokemonService();
+        BattleService battleService = new BattleService();
         
         // 3匹のポケモンを用意
-        Pokemon nyaoha = pokemonService.createPokemon("ニャオハ", "くさ", 40, 61, 54);
-        Pokemon hogator = pokemonService.createPokemon("ホゲータ", "ほのお", 67, 45, 59);
-        Pokemon kuwassu = pokemonService.createPokemon("クワッス", "みず", 55, 65, 45);
+        Pokemon nyaoha = pokemonService.createPokemon("ニャオハ", "くさ", 40, 61, 54, 65);
+        Pokemon hogator = pokemonService.createPokemon("ホゲータ", "ほのお", 67, 45, 59, 36);
+        Pokemon kuwassu = pokemonService.createPokemon("クワッス", "みず", 55, 65, 45, 50);
         
         System.out.println("ポケモンを選んで下さい。");
         System.out.println("1:ニャオハ　2:ホゲータ　3:クワッス");
@@ -58,7 +62,16 @@ public class Main {
             cpuPokemon = cpuPokemonList[random.nextInt(cpuPokemonList.length)];
         }
 
-        System.out.println("対戦相手のポケモンは" + cpuPokemon.getName() + "です！");
+        // トレーナーの作成
+        Trainer playerTrainer = new Trainer("プレイヤー");
+        Trainer cpuTrainer = new Trainer("CPU");
+        
+        playerTrainer.addPokemon(playerPokemon);
+        cpuTrainer.addPokemon(cpuPokemon);
+        
+        // バトルの作成と開始
+        Battle battle = new Battle(playerTrainer, cpuTrainer, playerPokemon, cpuPokemon);
+        battleService.simulateBattle(battle);
         
         scanner.close();
         
