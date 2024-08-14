@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.example.pokemonapp.model.Battle;
 import com.example.pokemonapp.model.Pokemon;
+import com.example.pokemonapp.model.Trainer;
 
 /**
  * ポケモンバトルのシミュレーションを行うサービスクラス。
@@ -18,10 +19,14 @@ public class BattleService {
      * @param battle シミュレートするバトル
      */
     public void simulateBattle(Battle battle) {
+        Trainer cpuTrainer = battle.getCpuTrainer();
         Pokemon playerPokemon = battle.getPlayerPokemon();
         Pokemon cpuPokemon = battle.getCpuPokemon();
+        
+        System.out.println(cpuTrainer.getName() + "が勝負をしかけてきた！");
+        System.out.println(cpuTrainer.getName() + "は" + cpuPokemon.getName() + "をくり出した！");
 
-        System.out.println("バトル開始！ " + playerPokemon.getName() + " VS " + cpuPokemon.getName());
+        System.out.println("いけっ！" + playerPokemon.getName() + "！");
 
         while (playerPokemon.getHp() > 0 && cpuPokemon.getHp() > 0) {
             // プレイヤーのターン
