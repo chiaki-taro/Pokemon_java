@@ -28,22 +28,25 @@ public class BattleService {
 
         System.out.println("いけっ！" + playerPokemon.getName() + "！");
 
+        Pokemon first, second;
+        
+        // 素早さで攻撃順を決定
+        if (playerPokemon.getSpeed() > cpuPokemon.getSpeed()) {
+            first = playerPokemon;
+            second = cpuPokemon;
+        } else {
+            first = cpuPokemon;
+            second = playerPokemon;
+        }
+
         while (playerPokemon.getHp() > 0 && cpuPokemon.getHp() > 0) {
-            // プレイヤーのターン
-            if (performAttack(playerPokemon, cpuPokemon)) {
-                break;
-            }
+            // 速いポケモンが攻撃
+            if (performAttack(first, second)) break;
+            if (performAttack(second, first)) break;
 
-            // CPUのターン
-            if (performAttack(cpuPokemon, playerPokemon)) {
-                break;
-            }
-
-            // 現在のHP状況を表示
             displayCurrentStatus(playerPokemon, cpuPokemon);
         }
 
-        // 勝者
         announceWinner(playerPokemon, cpuPokemon);
     }
 
