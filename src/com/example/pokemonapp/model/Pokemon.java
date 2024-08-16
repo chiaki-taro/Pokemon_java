@@ -1,5 +1,7 @@
 package com.example.pokemonapp.model;
 
+import java.util.List;
+
 /**
  * ポケモンを表すクラス。
  * 各ポケモンは名前、タイプ、HP、攻撃力、防御力を持つ。
@@ -12,6 +14,7 @@ public class Pokemon {
     private int attack;
     private int defense;
     private int speed;
+    private List<Move> moves;
     
     /**
      * Pokemonクラスのコンストラクタ。
@@ -22,14 +25,16 @@ public class Pokemon {
      * @param attack  ポケモンの攻撃力
      * @param defense ポケモンの防御力
      * @param speed   ポケモンの素早さ
+     * @param moves   ポケモンの技
      */
-    public Pokemon(String name, String type, int hp, int attack, int defense, int speed) {
+    public Pokemon(String name, String type, int hp, int attack, int defense, int speed, List<Move> moves) {
         this.name = name;
         this.type = type;
         this.hp = hp;
         this.attack = attack;
         this.defense = defense;
         this.speed = speed;
+        this.moves = moves;
     }
     
     /**
@@ -93,6 +98,15 @@ public class Pokemon {
      */
     public int getSpeed() {
         return speed;
+    }
+    
+    /**
+     * ポケモンの技を取得する。
+     *
+     * @return ポケモンの技
+     */
+    public List<Move> getMoves() {
+        return moves;
     }
 
 }
