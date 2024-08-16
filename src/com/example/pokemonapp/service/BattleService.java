@@ -1,8 +1,10 @@
 package com.example.pokemonapp.service;
 
 import java.util.Random;
+import java.util.Scanner;
 
 import com.example.pokemonapp.model.Battle;
+import com.example.pokemonapp.model.Move;
 import com.example.pokemonapp.model.Pokemon;
 import com.example.pokemonapp.model.Trainer;
 
@@ -25,7 +27,6 @@ public class BattleService {
         
         System.out.println(cpuTrainer.getName() + "が勝負をしかけてきた！");
         System.out.println(cpuTrainer.getName() + "は" + cpuPokemon.getName() + "をくり出した！");
-
         System.out.println("いけっ！" + playerPokemon.getName() + "！");
 
         Pokemon first, second;
@@ -39,15 +40,69 @@ public class BattleService {
             second = playerPokemon;
         }
 
+        Scanner scanner = new Scanner(System.in);
+
         while (playerPokemon.getHp() > 0 && cpuPokemon.getHp() > 0) {
-            // 速いポケモンが攻撃
-            if (performAttack(first, second)) break;
-            if (performAttack(second, first)) break;
+            // プレイヤーが技を選択
+            if (first == playerPokemon) {
+                selectMoveAndAttack(first, second, scanner);
+                if (second.getHp() <= 0) break;
+                performCpuAttack(second, first);
+            } else {
+                performCpuAttack(first, second);
+                if (second.getHp() <= 0) break;
+                selectMoveAndAttack(second, first, scanner);
+            }
 
             displayCurrentStatus(playerPokemon, cpuPokemon);
         }
 
         announceWinner(playerPokemon, cpuPokemon);
+        scanner.close();
+    }
+
+    /**
+     * プレイヤーが技を選択して攻撃を実行する。
+     *
+     * @param attacker 攻撃するポケモン
+     * @param defender 防御するポケモン
+     * @param scanner ユーザー入力を受け取るスキャナ
+     */
+    private void selectMoveAndAttack(Pokemon attacker, Pokemon defender, Scanner scanner) {
+        System.out.println(attacker.getName() + "はどうする？");
+
+        // 技リストを表示
+        for (int i = 0; i < attacker.getMoves().size(); i++) {
+            System.out.println((i + 1) + ": " + attacker.getMoves().get(i).getName());
+        }
+
+        int moveIndex;
+        while (true) {
+            try {
+                moveIndex = Integer.parseInt(scanner.nextLine()) - 1;
+                if (moveIndex >= 0 && moveIndex < attacker.getMoves().size()) {
+                    break;
+                } else {
+                    System.out.println("正しい番号を選んでください。");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("正しい番号を選んでください。");
+            }
+        }
+
+        Move selectedMove = attacker.getMoves().get(moveIndex);
+        performAttack(attacker, defender, selectedMove);
+    }
+
+    /**
+     * CPUがランダムに技を選んで攻撃を実行する。
+     *
+     * @param attacker 攻撃するポケモン
+     * @param defender 防御するポケモン
+     */
+    private void performCpuAttack(Pokemon attacker, Pokemon defender) {
+        Move selectedMove = attacker.getMoves().get(random.nextInt(attacker.getMoves().size()));
+        performAttack(attacker, defender, selectedMove);
     }
 
     /**
@@ -55,14 +110,15 @@ public class BattleService {
      *
      * @param attacker 攻撃するポケモン
      * @param defender 防御するポケモン
+     * @param move 使用する技
      * @return 攻撃によって相手のHPが0以下になった場合はtrue、そうでない場合はfalse
      */
-    private boolean performAttack(Pokemon attacker, Pokemon defender) {
-        System.out.println(attacker.getName() + "の攻撃！");
+    private boolean performAttack(Pokemon attacker, Pokemon defender, Move move) {
+        System.out.println(attacker.getName() + "の" + move.getName() + "！");
         
-        // 攻撃の成功率を80%に設定
-        if (random.nextDouble() < 0.8) {
-            int damage = calculateDamage(attacker, defender);
+        // 攻撃の成功率に基づいて命中判定
+        if (random.nextDouble() * 100 < move.getAccuracy()) {
+            int damage = calculateDamage(attacker, defender, move);
             defender.setHp(Math.max(0, defender.getHp() - damage));
             System.out.println(defender.getName() + "に" + damage + "のダメージ！");
             
@@ -81,13 +137,25 @@ public class BattleService {
      *
      * @param attacker 攻撃するポケモン
      * @param defender 防御するポケモン
+     * @param move 使用する技
      * @return 計算されたダメージ
      */
-    private int calculateDamage(Pokemon attacker, Pokemon defender) {
-        // 基本ダメージ計算式: (攻撃力 - 防御力 / 2) + ランダム要素
-        int baseDamage = attacker.getAttack() - defender.getDefense() / 2;
-        int randomFactor = random.nextInt(10) + 1; // 1から10のランダムな値
-        return Math.max(1, baseDamage + randomFactor); // 最小ダメージは1
+    private int calculateDamage(Pokemon attacker, Pokemon defender, Move move) {
+        final double LEVEL = 50; // レベルを固定値に設定
+
+        // ダメージ計算式
+        double damage = (((2 * LEVEL / 5 + 2) * move.getPower() * attacker.getAttack() / defender.getDefense()) / 50 + 2);
+
+        // 効果補正 (ここでは1.0として固定)
+        double effectiveness = 1.0;
+
+        // ランダム要素
+        double randomFactor = 0.85 + random.nextDouble() * 0.15;
+
+        // 最終ダメージ
+        int finalDamage = (int) Math.max(1, damage * effectiveness * randomFactor); // 最小ダメージは1
+
+        return finalDamage;
     }
 
     /**

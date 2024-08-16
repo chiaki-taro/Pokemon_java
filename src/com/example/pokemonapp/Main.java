@@ -1,9 +1,11 @@
 package com.example.pokemonapp;
 
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
 import com.example.pokemonapp.model.Battle;
+import com.example.pokemonapp.model.Move;
 import com.example.pokemonapp.model.Pokemon;
 import com.example.pokemonapp.model.Trainer;
 import com.example.pokemonapp.service.BattleService;
@@ -17,10 +19,19 @@ public class Main {
         PokemonService pokemonService = new PokemonService();
         BattleService battleService = new BattleService();
         
+        // 技の作成
+        Move scratch = new Move("ひっかく", "ノーマル", 40, 100);
+        Move konoha = new Move("このは", "くさ", 40, 100);
+        Move tackle = new Move("たいあたり", "ノーマル", 40, 100);
+        Move ember = new Move("ひのこ", "ほのお", 40, 100);
+        Move pound = new Move("はたく", "ノーマル", 40, 100);
+        Move waterGun = new Move("みずてっぽう", " みず", 40, 100);
+
+        
         // 3匹のポケモンを用意
-        Pokemon nyaoha = pokemonService.createPokemon("ニャオハ", "くさ", 40, 61, 54, 65);
-        Pokemon hogator = pokemonService.createPokemon("ホゲータ", "ほのお", 67, 45, 59, 36);
-        Pokemon kuwassu = pokemonService.createPokemon("クワッス", "みず", 55, 65, 45, 50);
+        Pokemon nyaoha = pokemonService.createPokemon("ニャオハ", "くさ", 40, 61, 54, 65, Arrays.asList(scratch, konoha));
+        Pokemon hogator = pokemonService.createPokemon("ホゲータ", "ほのお", 67, 45, 59, 36, Arrays.asList(tackle, ember));
+        Pokemon kuwassu = pokemonService.createPokemon("クワッス", "みず", 55, 65, 45, 50, Arrays.asList(pound, waterGun));
         
         System.out.println("ポケモンを選んで下さい。");
         System.out.println("1:ニャオハ　2:ホゲータ　3:クワッス");
