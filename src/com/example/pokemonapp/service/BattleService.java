@@ -7,6 +7,7 @@ import com.example.pokemonapp.model.Battle;
 import com.example.pokemonapp.model.Move;
 import com.example.pokemonapp.model.Pokemon;
 import com.example.pokemonapp.model.Trainer;
+import com.example.pokemonapp.util.TypeEffectiveness;
 
 /**
  * ポケモンバトルのシミュレーションを行うサービスクラス。
@@ -143,18 +144,28 @@ public class BattleService {
     private int calculateDamage(Pokemon attacker, Pokemon defender, Move move) {
         final double LEVEL = 50; // レベルを固定値に設定
 
-        // ダメージ計算式
+        // 基本ダメージ計算式
         double damage = (((2 * LEVEL / 5 + 2) * move.getPower() * attacker.getAttack() / defender.getDefense()) / 50 + 2);
 
-        // 効果補正 (ここでは1.0として固定)
-        double effectiveness = 1.0;
+        // タイプ相性による効果倍率を計算
+        double typeEffectiveness = TypeEffectiveness.getEffectiveness(move.getType(), defender.getType());
 
         // ランダム要素
         double randomFactor = 0.85 + random.nextDouble() * 0.15;
 
-        // 最終ダメージ
-        int finalDamage = (int) Math.max(1, damage * effectiveness * randomFactor); // 最小ダメージは1
+        // 効果倍率に基づいてメッセージを表示
+        if (typeEffectiveness == 0.0) {
+            System.out.println("効果がないようだ...");
+            return 0; // ダメージを0に設定
+        } else if (typeEffectiveness > 1.0) {
+            System.out.println("こうかはばつぐんだ！");
+        } else if (typeEffectiveness < 1.0) {
+            System.out.println("こうかは今ひとつのようだ...");
+        }
 
+        // 最終ダメージ
+        int finalDamage = (int) Math.max(1, damage * typeEffectiveness * randomFactor); // 最小ダメージは1
+        
         return finalDamage;
     }
 

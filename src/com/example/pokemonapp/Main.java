@@ -22,29 +22,35 @@ public class Main {
         // 技の作成
         Move scratch = new Move("ひっかく", "ノーマル", 40, 100);
         Move konoha = new Move("このは", "くさ", 40, 100);
+        Move playRough = new Move("じゃれつく", "フェアリー", 90, 90);
         Move tackle = new Move("たいあたり", "ノーマル", 40, 100);
         Move ember = new Move("ひのこ", "ほのお", 40, 100);
+        Move fireBlast = new Move("だいもんじ", "ほのお", 110, 85);
         Move pound = new Move("はたく", "ノーマル", 40, 100);
-        Move waterGun = new Move("みずてっぽう", " みず", 40, 100);
-
+        Move waterGun = new Move("みずてっぽう", "みず", 40, 100);
+        Move airSlash = new Move("エアスラッシュ", "ひこう",75, 95);
+        Move confusion = new Move("ねんりき", "エスパー", 50, 100);
+        Move powerGem = new Move("パワージェム", "いわ", 80, 100);
+        Move icyWind = new Move("こごえるかぜ", "こおり", 55, 95);
         
-        // 3匹のポケモンを用意
-        Pokemon nyaoha = pokemonService.createPokemon("ニャオハ", "くさ", 40, 61, 54, 65, Arrays.asList(scratch, konoha));
-        Pokemon hogator = pokemonService.createPokemon("ホゲータ", "ほのお", 67, 45, 59, 36, Arrays.asList(tackle, ember));
-        Pokemon kuwassu = pokemonService.createPokemon("クワッス", "みず", 55, 65, 45, 50, Arrays.asList(pound, waterGun));
+        // ポケモンを用意
+        Pokemon nyaoha = pokemonService.createPokemon("ニャオハ", "くさ", 40, 61, 54, 65, Arrays.asList(scratch, konoha, playRough));
+        Pokemon hogator = pokemonService.createPokemon("ホゲータ", "ほのお", 67, 45, 59, 36, Arrays.asList(tackle, ember, fireBlast));
+        Pokemon kuwassu = pokemonService.createPokemon("クワッス", "みず", 55, 65, 45, 50, Arrays.asList(pound, waterGun,airSlash));
+        Pokemon misdreavus = pokemonService.createPokemon("ムウマ", "ゴースト", 60, 60, 60, 85, Arrays.asList(confusion, powerGem, icyWind));
         
         System.out.println("ポケモンを選んで下さい。");
-        System.out.println("1:ニャオハ　2:ホゲータ　3:クワッス");
+        System.out.println("1:ニャオハ　2:ホゲータ　3:クワッス　4:ムウマ");
         
         String choice;
         Pokemon playerPokemon;
            
         while (true) {
             choice = scanner.nextLine();
-            if (choice.matches("^[1-3]$")) {
+            if (choice.matches("^[1-4]$")) {
                 break;
             } else {
-                System.out.println("1,2,3いずれかの数字を半角数字を入力してください。");
+                System.out.println("1,2,3,4いずれかの数字を半角数字を入力してください。");
             }
         }
         
@@ -57,6 +63,9 @@ public class Main {
             break;
         case "3":
             playerPokemon = kuwassu;
+            break;
+        case "4":
+            playerPokemon = misdreavus;
             break;
         default:
             playerPokemon = nyaoha; // デフォルトはニャオハ
