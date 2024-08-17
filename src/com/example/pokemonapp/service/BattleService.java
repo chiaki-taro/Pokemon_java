@@ -155,12 +155,12 @@ public class BattleService {
 
         // 効果倍率に基づいてメッセージを表示
         if (typeEffectiveness == 0.0) {
-            System.out.println("効果がないようだ...");
+            System.out.println(defender.getName() + "には効果がないようだ...");
             return 0; // ダメージを0に設定
         } else if (typeEffectiveness > 1.0) {
-            System.out.println("こうかはばつぐんだ！");
+            System.out.println(defender.getName() + "には効果はばつぐんだ！");
         } else if (typeEffectiveness < 1.0) {
-            System.out.println("こうかは今ひとつのようだ...");
+            System.out.println(defender.getName() + "には効果は今ひとつのようだ...");
         }
 
         // 最終ダメージ
