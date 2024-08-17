@@ -158,7 +158,7 @@ public class BattleService {
             System.out.println(defender.getName() + "には効果がないようだ...");
             return 0; // ダメージを0に設定
         } else if (typeEffectiveness > 1.0) {
-            System.out.println(defender.getName() + "には効果はばつぐんだ！");
+            System.out.println(defender.getName() + "には効果は抜群だ！");
         } else if (typeEffectiveness < 1.0) {
             System.out.println(defender.getName() + "には効果は今ひとつのようだ...");
         }
